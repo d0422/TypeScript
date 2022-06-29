@@ -193,5 +193,55 @@ any →  모든 값이 올 수 있음, 즉 typescript에서 벗어나기 위해 
     ```
     
     마지막 else → never를 return함 ⇒ 함수가 제대로 실행되지 않는경우, 즉 예외를 throw하거나 프로그램 실행 종료를 의미함
-	
-
+    
+    ### Call signiture
+    
+    ⇒ 함수 위에 마우스를 올렸을 때 보게 되는 것
+    
+    함수의 타입과 함수의 인자, 반환 타입을 알려줌
+    
+    위와 아래는 같은 형태, 결과를 갖는다.
+    
+    ```tsx
+    function add(a:number, b:number){
+    	return a+b;
+    }
+    const add(a:number, b:number) => a+b;
+    ```
+    
+    ```tsx
+    type Add = (a:number, b:number) => number;
+    const add:Add = (a,b) => a+b;
+    ```
+    
+    ### Overloading
+    
+    ⇒ 함수가 여러개의 call signiture를 가진 경우 발생함
+    
+    ```tsx
+    type Add = {
+    	(a:number, b:number) : number
+    	(a:number, b:string) : number
+    }
+    const add : Add=(a,b) =>{
+    	if(typeof b==="string") return a
+    	return a+b
+    }
+    ```
+    
+    이런 식으로 사용할 때 발생하기때문에 함수에서 예외 처리를 해주어야함
+    
+    파라미터가 옵션일때
+    
+    ```tsx
+    type Add = {
+    	(a:number, b:number) : number
+    	(a : number , b:number, c:number) :number,
+    }
+    const add:Add = (a,b,c?:number) => {
+    	if(c) return a+b+c
+    	return a+b
+    }
+    add(1,2)
+    add(1,2,3)
+    ```
