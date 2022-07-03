@@ -245,3 +245,162 @@ any →  모든 값이 올 수 있음, 즉 typescript에서 벗어나기 위해 
     add(1,2)
     add(1,2,3)
     ```
+    
+    ### Generic사용하기(다형성)
+    
+    ```tsx
+    tye SuperPrint={
+    	<TypePlaceholder>{arr : Typeplaceholder[]):void
+    }
+    const superPrint : SuperPrint = (arr) => {
+    	arr.forEach(i=>console.log(i))
+    }
+    superPrint([1,2,3,4])
+    ```
+    
+    ⇒ generic을 사용하면 일일히 type을 모두 입력할 필요가 없다.
+    
+    위의 <TypePlaceholder>에는 대신에 다른 단어가 올 수 도 있다.
+    
+    ⇒ Generic은 요구한대로 call signiture를 작성해줌
+    
+    ⇒ any와는 다르다! any와는! → any는 타입스크립트에서 벗어나는 것
+    
+    ```tsx
+    type Player<E>={
+    	name:string
+    	extraInfo:E
+    }
+    const nico :Player<null>={
+    	name:"nico",
+    	extraInfo : null
+    }
+    ```
+    
+    ### Class
+    
+    ```tsx
+    class Player{
+    	constructor{
+    		private firstName :string
+    		private lastName : string
+    		public nickname :string -> 얘는 다르게 사용 가능
+    	}{}
+    }
+    ```
+    
+    원래라면 클래스의 객체는 this.firstname형태로 선언되어야 하지만, typescript에서는 그러지 않아도 된다.
+    
+    ⇒ js로 컴파일 된 결과
+    
+    ```jsx
+    class Player{
+    	constructor{
+    		this.firstName= firstName;
+    		this.lastName=lastName;
+    	}
+    }
+    ```
+    
+    ### 추상 클래스
+    
+    ```tsx
+    class Player{
+    	constructor{
+    		private firstName :string
+    		private lastName : string
+    		public nickname :string
+    	}{}
+    }
+    class Player extends User{
+    }
+    ```
+    
+    ⇒ extends 추상클래스 이름 형태로 선언하며, 인스턴스를 새로 만들수는 없다.
+    
+    ### 추상 메소드
+    
+    ```tsx
+    class Player{
+    	constructor{
+    		private firstName :string
+    		private lastName : string
+    		public nickname :string
+    	}{}
+    	getFullName(){
+    		return `${this.firstName} ${this.lastName}`
+    }
+    }
+    class Player extends User{
+    }
+    const nico = new Player("nico","last,"니코");
+    nico.getFullName();
+    ```
+    
+    만약 getFullName앞에 private를 붙여준다면 위코드의 nico.getFullName은 작동하지 않는다.
+    
+    추상메소드를 만들려면, 메소드를 클래스 안에서 작성하지 않아도 됨
+    
+    추상클래스에서는 추상메소드를 만들 수 있으나, 직접 구현해서는 안되고, call signiture만 적어둬야 함
+    
+    ```tsx
+    class Player{
+    	constructor{
+    		private firstName :string
+    		private lastName : string
+    		public nickname :string
+    	}{}
+    	abstract getNickName() : void
+    	getFullName(){
+    		return `${this.firstName} ${this.lastName}`
+    	}
+    }
+    class Player extends User{
+    }
+    const nico = new Player("nico","last,"니코");
+    nico.getFullName();
+    ```
+    
+    property를 private로 선언하면, 상속받아도 접근되지 않는다.
+    
+    따라서 protected로 선언한다.
+    
+    ```tsx
+    abstract class User{
+    	constructor{
+    		protected firstName :string
+    		protected lastName : string
+    		protected nickname :string
+    	}{}
+    	abstract getNickName() : void
+    	getFullName(){
+    		return `${this.firstName} ${this.lastName}`
+    	}
+    
+    }
+    class Player extends User{
+    }
+    const nico = new Player("nico","last,"니코");
+    nico.getFullName();
+    ```
+    
+    protected로 선언하면 상속받아서 메소드로 사용할 수 있다.
+    
+    ```tsx
+    type Words={
+    	[key:string]: string
+    }
+    
+    class Dict{
+    	private words: Words;
+    }
+    let dict:Words={
+    	"potato:"food"
+    }
+    
+    ```
+    
+    [키 이름 : 형태] :형태 
+    
+    ⇒ 객체 선언시  type 지정
+    
