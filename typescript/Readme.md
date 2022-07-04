@@ -404,3 +404,140 @@ any →  모든 값이 올 수 있음, 즉 typescript에서 벗어나기 위해 
     
     ⇒ 객체 선언시  type 지정
     
+    ### Readonly
+    
+    ```tsx
+    class Word{
+    	constructor(
+    		public readonly term : string,
+    		public readonly def : string,
+    	){}
+    }
+    ```
+    
+    ⇒ 읽을 수는 있지만 변경할 수 없음(JS에서는 보이지 않음)
+    
+    ### 특수한 type 선언하기
+    
+    ```tsx
+    type Team="red"|"blue"|"yellow"
+    type Player={
+    	nickname:string,
+    	team:Team,
+    	health:number
+    }
+    ```
+    
+    ⇒ Team은 red, blue, yellow만 가능함
+    
+    ### interface
+    
+    ⇒ 오브젝트 모양을 설정을 위해 사용함
+    
+    ```tsx
+    interface Player{
+    	nickname:string,
+    	team:Team,
+    	health:number
+    }
+    ```
+    
+    interface는 오직 객체의 모양을 설정해 주기 위한 것으로, type 키워드가 더 많은 것을 할 수 있음
+    
+    interface는 상속이 가능함
+    
+    ```tsx
+    interface User extends Player{
+    }
+    const nico : User{
+    	nickname:"nico"
+    }
+    ```
+    
+    type으로도 가능함
+    
+    ```tsx
+    type User={
+    	name : string
+    }
+    type Player=User&{
+    }
+    ```
+    
+    interface를 n번쓴다고 해도, ts가 합쳐준다.
+    
+    그러나 type은 한번만 사용가능하다.
+    
+    ### 추상클래스
+    
+    ```tsx
+    abstract class User{
+    	constructor(
+    		protected firstName:string,
+    		protected lastName:string,
+    	){}
+    	abstract sayHi(name:string):string
+    	abstract frullName():string
+    }
+    class Player extends User{
+    	fullName(){
+    		return `${this.firstName} ${this.lastName}`
+    }
+    	sayHi(name:string){
+    		return `Hello ${name}. My name is ${this.fullname()}
+    	}
+    ```
+    
+    ⇒ js에 추상클래스란 존재하지 않는다.
+    
+    인터페이스는 가벼움. 인터페이스는 js로 컴파일되지 않고 사라짐
+    
+    ```tsx
+    interface User{
+    	firstName:string,
+    	lastName:string,
+    	sayHi(name:string) : string
+    	fullName():string
+    }
+    class Player implements User{
+    	constructor(){
+    		public firstName:string,
+    		public lastName:string	
+    	}{}
+    	fullName(){
+    		return `${this.firstName} ${this.lastName}`
+    }
+    	sayHi(name:string){
+    		return `Hello ${name}. My name is ${this.fullname()}
+    	}
+    }
+    ```
+    
+    ⇒ js로 번역(컴파일)되지 않고, 가볍게 선언이 가능함 똑같이 선언됨
+    
+    다만 interface를 상속할때는 public으로 선언해야만 함
+    
+    ## 복습
+    
+    ### Type
+    
+    1. type [이름] = {[내용]}
+    2. 내용은 형태가 될 수 있으나 **특정 내용**일 수도 있다.
+    3. type의 상속은 type type2=type1&{}의 형태로 이루어진다.
+    4. type은 여러번 선언할 수 없다.
+    
+    ### Interface
+    
+    1. interface [이름]{[내용]}
+    2. interface의 상속은 interface interface2 extends interface1
+    3. intercace는 여러번 선언하면 합쳐진다.
+    
+    ### 클래스 상속
+    
+    ```tsx
+    class User implements typeorinterface{
+    	constructor(
+    		public firstName:string
+    		){}
+    }
+    ```
